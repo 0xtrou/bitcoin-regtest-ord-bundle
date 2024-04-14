@@ -2,9 +2,11 @@ version: "3"
 services:
   bitcoin-core:
     platform: linux/amd64
-    image: ruimarinho/bitcoin-core
+    image: dobtc/bitcoin:latest
     container_name: bitcoin-server
     restart: always
+    env_file:
+      - ./.env
     volumes:
       - ./data:/root/.bitcoin
       - ./local-boot.sh:/home/bitcoin/boot.sh

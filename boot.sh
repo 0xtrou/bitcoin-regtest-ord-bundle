@@ -7,4 +7,4 @@ echo "Booting bitcoind ..."
 sleep 2;
 bitcoin-cli -regtest=1 -rpcuser=soloengineer -rpcpassword=soloengineer createwallet genesis || bitcoin-cli -regtest=1 -rpcuser=soloengineer -rpcpassword=soloengineer loadwallet genesis
 
-while true; do bitcoin-cli -rpcwallet=genesis -regtest=1 -rpcuser=soloengineer -rpcpassword=soloengineer -generate 1; sleep 60; done
+while true; do bitcoin-cli -rpcwallet=genesis -regtest=1 -rpcuser=soloengineer -rpcpassword=soloengineer -generate 1; sleep 10; done
