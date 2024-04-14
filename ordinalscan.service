@@ -3,8 +3,8 @@ Description=Ordinals Scan service
 
 [Service]
 User=ubuntu
-WorkingDirectory=/home/ubuntu/deop-devnet/
-ExecStart=/usr/bin/bash /home/ubuntu/deop-devnet/ord.sh server --http-port 3003
+WorkingDirectory=/home/ubuntu/bitcoin-regtest-ord-bundle/
+ExecStart=/usr/bin/bash /home/ubuntu/bitcoin-regtest-ord-bundle/ord.sh server --http-port 3003
 Restart=always
 
 [Install]
