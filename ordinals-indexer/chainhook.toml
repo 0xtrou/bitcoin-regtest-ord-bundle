@@ -1,0 +1,27 @@
+[storage]
+working_dir = "cache"
+
+# The Http Api allows you to register / deregister
+# dynamically predicates.
+# Disable by default.
+#
+[http_api]
+http_port = 20456
+database_uri = "redis://127.0.0.1:6379/"
+
+[network]
+mode = "devnet"
+bitcoind_rpc_url = "http://127.0.0.1:18443"
+bitcoind_rpc_username = "soloengineer"
+bitcoind_rpc_password = "soloengineer"
+stacks_node_rpc_url = "http://127.0.0.1:20443"
+bitcoind_zmq_url = "tcp://127.0.0.1:29000"
+
+[limits]
+max_number_of_bitcoin_predicates = 100
+max_number_of_concurrent_bitcoin_scans = 100
+max_number_of_stacks_predicates = 10
+max_number_of_concurrent_stacks_scans = 10
+max_number_of_processing_threads = 16
+max_number_of_networking_threads = 16
+max_caching_memory_size_mb = 32000

@@ -1,0 +1,74 @@
+version: "3"
+services:
+  bitcoin-core:
+    platform: linux/amd64
+    image: ruimarinho/bitcoin-core
+    container_name: bitcoin-server
+    restart: always
+    volumes:
+      - ./data:/root/.bitcoin
+      - ./boot.sh:/home/bitcoin/boot.sh
+    ports:
+      - 127.0.0.1:8333:8333
+      - 127.0.0.1:8332:8332
+      - 127.0.0.1:18332:18332
+      - 127.0.0.1:18333:18333
+      - 127.0.0.1:18443:18443
+      - 127.0.0.1:18444:18444
+      - 127.0.0.1:29000:29000 # zmq port
+      - 127.0.0.1:29001:29001 # zmq port
+      - 127.0.0.1:29002:29002 # zmq port
+      - 127.0.0.1:29003:29003 # zmq port  
+    command: bash /home/bitcoin/boot.sh
+
+  esplora:
+    platform: linux/amd64
+    restart: always
+    build: ./esplora
+    container_name: esplora
+    depends_on:
+      - bitcoin-core
+    links:
+      - bitcoin-core
+    ports:
+      - 127.0.0.1:3004:50001
+      - 127.0.0.1:3002:80
+    environment:
+      - RPC_URL=bitcoin-core:18444
+      - RPC_USER=soloengineer
+      - RPC_PASSWORD=soloengineer
+      - SYNC_ONLY=1
+      - CORS_ALLOW=*
+    command: bash /srv/explorer/run.sh bitcoin-regtest explorer
+
+  postgres:
+    container_name: postgres
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ordinals
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes: 
+      - postgres_db:/var/lib/postgresql/data
+        
+  redis:
+    container_name: redis
+    image: docker.io/bitnami/redis:7.0
+    restart: always
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - '127.0.0.1:6379:6379'
+    volumes:
+      - 'redis_data:/bitnami/redis/data'
+
+volumes:
+  redis_data:
+    driver: local
+  postgres_db:
+    driver: local
