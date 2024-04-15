@@ -1,0 +1,22 @@
+version: "3"
+services:
+  bitcoin-core:
+    platform: linux/amd64
+    image: dobtc/bitcoin:latest
+    container_name: bitcoin-server
+    restart: always
+    volumes:
+      - ./data:/root/.bitcoin
+      - ./boot.sh:/home/bitcoin/boot.sh
+    ports:
+      - 127.0.0.1:8333:8333
+      - 127.0.0.1:8332:8332
+      - 127.0.0.1:18332:18332
+      - 127.0.0.1:18333:18333
+      - 127.0.0.1:18443:18443
+      - 127.0.0.1:18444:18444
+      - 127.0.0.1:29000:29000 # zmq port
+      - 127.0.0.1:29001:29001 # zmq port
+      - 127.0.0.1:29002:29002 # zmq port
+      - 127.0.0.1:29003:29003 # zmq port  
+    command: bash /home/bitcoin/boot.sh
