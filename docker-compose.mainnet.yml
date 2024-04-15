@@ -6,8 +6,8 @@ services:
     container_name: bitcoin-server
     restart: always
     volumes:
-      - ./data:/root/.bitcoin
-      - ./boot.sh:/home/bitcoin/boot.sh
+      - ./.bitcoin:/root/.bitcoin
+      - ./boot.mainnet.sh:/home/bitcoin/boot.sh
     ports:
       - 127.0.0.1:8333:8333
       - 127.0.0.1:8332:8332
